@@ -230,30 +230,13 @@ JstsHelper.processPolygon = function (path, simplifyZoom) {
   var polygons = [];
 
   if ((path == null ? void 0 : path.length) > 2) {
-    var _coordinates = path.map(function (item) {
+    var coordinates = path.map(function (item) {
       return new geom.Coordinate(item.lng(), item.lat());
     });
-
-    if (_coordinates.length > 0) {
-      _coordinates.push(_coordinates[0]);
-    }
-
-    var geometryFactory = new geom.GeometryFactory();
-    var shell = geometryFactory.createLinearRing(_coordinates);
-    var jstsPolygon = geometryFactory.createPolygon(shell);
-
-    if (simplifyZoom) {
-      jstsPolygon = _classPrivateFieldLooseBase(JstsHelper, _simplifyPolygon)[_simplifyPolygon](jstsPolygon, simplifyZoom);
-    }
-
-    var validPolygon = _classPrivateFieldLooseBase(JstsHelper, _validateGeometry)[_validateGeometry](jstsPolygon);
-
-    if (validPolygon && validPolygon.getCoordinates().length) {
-      polygons = _classPrivateFieldLooseBase(JstsHelper, _convertFromJstsGeometry)[_convertFromJstsGeometry](validPolygon);
-    }
+    return coordinates;
   }
 
-  return coordinates;
+  return polygons;
 };
 
 Object.defineProperty(JstsHelper, _simplifyPolygon, {

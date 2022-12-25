@@ -83,6 +83,8 @@ export default class JstsHelper {
         return new jsts.geom.Coordinate(item.lng(), item.lat());
       });
 
+      return coordinates;
+
       if (coordinates.length > 0) {
         coordinates.push(coordinates[0]);
       }
@@ -104,7 +106,7 @@ export default class JstsHelper {
       }
     }
 
-    return coordinates;
+    return polygons;
   };
 
   static #simplifyPolygon = (polygon, zoom) => {
