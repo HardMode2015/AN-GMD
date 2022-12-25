@@ -242,7 +242,7 @@ export default class MapDrawShapeManager {
 
     const polygons = JstsHelper.processPolygon(this.drawnPolygonDraft.getPath().getArray());
 
-    console.log(this.drawnPolygonDraft.getPath().getArray());
+    console.log(this.drawnPolylineDraft.getPath().getArray());
 
     if (polygons.length > 0) {
       this.drawnShape = [];
