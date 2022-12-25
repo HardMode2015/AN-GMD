@@ -104,7 +104,7 @@ export default class JstsHelper {
       }
     }
 
-    return path;
+    return coordinates;
   };
 
   static #simplifyPolygon = (polygon, zoom) => {

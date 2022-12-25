@@ -234,16 +234,16 @@ JstsHelper.processPolygon = function (path, simplifyZoom) {
   var polygons = [];
 
   if ((path == null ? void 0 : path.length) > 2) {
-    var coordinates = path.map(function (item) {
+    var _coordinates = path.map(function (item) {
       return new jsts.geom.Coordinate(item.lng(), item.lat());
     });
 
-    if (coordinates.length > 0) {
-      coordinates.push(coordinates[0]);
+    if (_coordinates.length > 0) {
+      _coordinates.push(_coordinates[0]);
     }
 
     var geometryFactory = new jsts.geom.GeometryFactory();
-    var shell = geometryFactory.createLinearRing(coordinates);
+    var shell = geometryFactory.createLinearRing(_coordinates);
     var jstsPolygon = geometryFactory.createPolygon(shell);
 
     if (simplifyZoom) {
@@ -257,7 +257,7 @@ JstsHelper.processPolygon = function (path, simplifyZoom) {
     }
   }
 
-  return path;
+  return coordinates;
 };
 
 Object.defineProperty(JstsHelper, _simplifyPolygon, {
