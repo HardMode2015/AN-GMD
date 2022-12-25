@@ -318,15 +318,15 @@ export default class MapDrawShapeManager {
 
     const polygons = JstsHelper.processPolygon(this.drawnPolylineDraft.getPath().getArray(), MapFunctions.getZoom(this.map));
     
-    var bounds = new google.maps.LatLngBounds();
+    // var bounds = new google.maps.LatLngBounds();
 
-    // Get paths from polygon and set event listeners for each path separately
-    polygons.getPath().forEach(function (path, index) {
+    // // Get paths from polygon and set event listeners for each path separately
+    // polygons.getPath().forEach(function (path, index) {
     
-        bounds.extend(path);
-    });
+    //     bounds.extend(path);
+    // });
 
-    console.log(bounds.getCenter())
+    // console.log(bounds.getCenter())
     if (polygons.length > 0) {
       this.drawnShape = [];
 
