@@ -247,6 +247,13 @@ export default class MapDrawShapeManager {
 
       let shape = [];
 
+      var bounds = new google.maps.LatLngBounds();
+      var i;
+
+      for (i = 0; i < polygons.length; i++) {
+        bounds.extend(polygons[i]);
+      }
+
       polygons.forEach((p) => {
         this.drawnShape.push(new google.maps.Polygon({ path: p, ...this.polygonOptions }));
 
@@ -259,7 +266,7 @@ export default class MapDrawShapeManager {
 
       this.#setDeleteDrawPoint();
 
-      this.callback(polygons);
+      this.callback({shape: shape, center: bounds.getCenter()});
     } else {
       this.#initDraw();
     }

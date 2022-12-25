@@ -674,6 +674,13 @@ function MapDrawShapeManager(map, _callback, drawingMode, drawFreeHandMode, poly
       if (polygons.length > 0) {
         _this.drawnShape = [];
         var shape = [];
+        var bounds = new google.maps.LatLngBounds();
+        var i;
+
+        for (i = 0; i < polygons.length; i++) {
+          bounds.extend(polygons[i]);
+        }
+
         polygons.forEach(function (p) {
           _this.drawnShape.push(new google.maps.Polygon(_extends({
             path: p
@@ -689,7 +696,10 @@ function MapDrawShapeManager(map, _callback, drawingMode, drawFreeHandMode, poly
 
         _classPrivateFieldLooseBase(_this, _setDeleteDrawPoint)[_setDeleteDrawPoint]();
 
-        _this.callback(polygons);
+        _this.callback({
+          shape: shape,
+          center: bounds.getCenter()
+        });
       } else {
         _classPrivateFieldLooseBase(_this, _initDraw)[_initDraw]();
       }
