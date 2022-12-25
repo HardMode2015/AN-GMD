@@ -259,7 +259,7 @@ export default class MapDrawShapeManager {
 
       this.#setDeleteDrawPoint();
 
-      this.callback(shape);
+      this.callback(polygons);
     } else {
       this.#initDraw();
     }
