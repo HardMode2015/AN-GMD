@@ -247,13 +247,6 @@ export default class MapDrawShapeManager {
 
       let shape = [];
 
-      var bounds = new google.maps.LatLngBounds();
-      var i;
-
-      for (i = 0; i < polygons.length; i++) {
-        bounds.extend(polygons[i]);
-      }
-
       polygons.forEach((p) => {
         this.drawnShape.push(new google.maps.Polygon({ path: p, ...this.polygonOptions }));
 
@@ -262,7 +255,6 @@ export default class MapDrawShapeManager {
             return { lat: item.lat(), lng: item.lng() };
           })
         );
-        // shape => shape + bounds.getCenter();
       });
 
       this.#setDeleteDrawPoint();
@@ -272,27 +264,6 @@ export default class MapDrawShapeManager {
       this.#initDraw();
     }
   };
-
-  #getZoomByBounds = ( map, bounds ) => {
-    var MAX_ZOOM = map.mapTypes.get( map.getMapTypeId() ).maxZoom || 21 ;
-    var MIN_ZOOM = map.mapTypes.get( map.getMapTypeId() ).minZoom || 0 ;
-
-    var ne= map.getProjection().fromLatLngToPoint( bounds.getNorthEast() );
-    var sw= map.getProjection().fromLatLngToPoint( bounds.getSouthWest() );
-
-    var worldCoordWidth = Math.abs(ne.x-sw.x);
-    var worldCoordHeight = Math.abs(ne.y-sw.y);
-
-    //Fit padding in pixels
-    var FIT_PAD = 40;
-
-    for( var zoom = MAX_ZOOM; zoom >= MIN_ZOOM; --zoom ){
-        if( worldCoordWidth*(1<<zoom)+2*FIT_PAD < $(map.getDiv()).width() &&
-            worldCoordHeight*(1<<zoom)+2*FIT_PAD < $(map.getDiv()).height() )
-            return zoom;
-    }
-    return 0;
-}
 
   #clearDrawListeners = () => {
     google.maps.event.clearListeners(this.map.getDiv(), 'click');
