@@ -18,9 +18,8 @@ export default class MapFunctions {
     const sw = bounds.getSouthWest();
 
     return {
-      ne, sw
-      // nw: { lat: ne.lat(), lng: sw.lng() },
-      // se: { lat: sw.lat(), lng: ne.lng() }
+      nw: { lat: ne.lat(), lng: sw.lng() },
+      se: { lat: sw.lat(), lng: ne.lng() }
     };
   };
 

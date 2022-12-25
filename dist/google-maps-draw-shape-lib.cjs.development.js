@@ -123,10 +123,14 @@ MapFunctions.getBounds = function (map) {
   var ne = bounds.getNorthEast();
   var sw = bounds.getSouthWest();
   return {
-    ne: ne,
-    sw: sw // nw: { lat: ne.lat(), lng: sw.lng() },
-    // se: { lat: sw.lat(), lng: ne.lng() }
-
+    nw: {
+      lat: ne.lat(),
+      lng: sw.lng()
+    },
+    se: {
+      lat: sw.lat(),
+      lng: ne.lng()
+    }
   };
 };
 
