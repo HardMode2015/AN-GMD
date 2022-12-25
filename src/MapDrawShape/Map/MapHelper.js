@@ -17,10 +17,7 @@ export default class MapFunctions {
     const ne = bounds.getNorthEast();
     const sw = bounds.getSouthWest();
 
-    return {
-      nw: { lat: ne.lat(), lng: sw.lng() },
-      se: { lat: sw.lat(), lng: ne.lng() }
-    };
+    return bounds;
   };
 
   /**

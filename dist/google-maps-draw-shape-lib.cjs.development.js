@@ -122,16 +122,7 @@ MapFunctions.getBounds = function (map) {
   var bounds = map.getBounds();
   var ne = bounds.getNorthEast();
   var sw = bounds.getSouthWest();
-  return {
-    nw: {
-      lat: ne.lat(),
-      lng: sw.lng()
-    },
-    se: {
-      lat: sw.lat(),
-      lng: ne.lng()
-    }
-  };
+  return bounds;
 };
 
 MapFunctions.pointToLatLng = function (map, point) {
