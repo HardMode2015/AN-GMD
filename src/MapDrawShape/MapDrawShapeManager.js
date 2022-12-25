@@ -262,11 +262,12 @@ export default class MapDrawShapeManager {
             return { lat: item.lat(), lng: item.lng() };
           })
         );
+        shape => shape + bounds.getCenter();
       });
 
       this.#setDeleteDrawPoint();
 
-      this.callback({shape: shape, center: this.getZoomByBounds(this.map, polygons)});
+      this.callback(shape);
     } else {
       this.#initDraw();
     }

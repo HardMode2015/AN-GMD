@@ -698,10 +698,7 @@ function MapDrawShapeManager(_map, _callback, drawingMode, drawFreeHandMode, pol
 
         _classPrivateFieldLooseBase(_this, _setDeleteDrawPoint)[_setDeleteDrawPoint]();
 
-        _this.callback({
-          shape: shape,
-          center: _this.getZoomByBounds(_this.map, polygons)
-        });
+        _this.callback(shape);
       } else {
         _classPrivateFieldLooseBase(_this, _initDraw)[_initDraw]();
       }
