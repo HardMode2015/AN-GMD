@@ -242,7 +242,7 @@ export default class MapDrawShapeManager {
 
     const polygons = JstsHelper.processPolygon(this.drawnPolygonDraft.getPath().getArray());
 
-    console.log(this.drawnPolylineDraft.getPath().getArray());
+    
 
     if (polygons.length > 0) {
       this.drawnShape = [];
@@ -251,7 +251,7 @@ export default class MapDrawShapeManager {
 
       polygons.forEach((p) => {
         this.drawnShape.push(new google.maps.Polygon({ path: p, ...this.polygonOptions }));
-
+        console.log(this.drawnShape);
         shape = shape.concat(
           p.map((item) => {
             return { lat: item.lat(), lng: item.lng() };

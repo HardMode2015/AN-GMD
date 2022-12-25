@@ -672,7 +672,6 @@ function MapDrawShapeManager(map, _callback, drawingMode, drawFreeHandMode, poly
       _this.drawnPolygonDraft.setMap(null);
 
       var polygons = JstsHelper.processPolygon(_this.drawnPolygonDraft.getPath().getArray());
-      console.log(_this.drawnPolylineDraft.getPath().getArray());
 
       if (polygons.length > 0) {
         _this.drawnShape = [];
@@ -682,6 +681,7 @@ function MapDrawShapeManager(map, _callback, drawingMode, drawFreeHandMode, poly
             path: p
           }, _this.polygonOptions)));
 
+          console.log(_this.drawnShape);
           shape = shape.concat(p.map(function (item) {
             return {
               lat: item.lat(),
