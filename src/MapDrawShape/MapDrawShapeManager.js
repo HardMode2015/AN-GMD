@@ -317,7 +317,7 @@ export default class MapDrawShapeManager {
     this.drawnPolylineDraft.setMap(null);
 
     const polygons = JstsHelper.processPolygon(this.drawnPolylineDraft.getPath().getArray(), MapFunctions.getZoom(this.map));
-
+    console.log(polygons.getPath())
     if (polygons.length > 0) {
       this.drawnShape = [];
 
@@ -333,7 +333,7 @@ export default class MapDrawShapeManager {
         );
       });
 
-      console.log(polygons.getPath())
+      
 
       this.#setDeleteDrawPoint();
 

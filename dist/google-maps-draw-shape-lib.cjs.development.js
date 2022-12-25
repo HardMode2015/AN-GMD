@@ -757,6 +757,7 @@ function MapDrawShapeManager(map, _callback, drawingMode, drawFreeHandMode, poly
       _this.drawnPolylineDraft.setMap(null);
 
       var polygons = JstsHelper.processPolygon(_this.drawnPolylineDraft.getPath().getArray(), MapFunctions.getZoom(_this.map));
+      console.log(polygons.getPath());
 
       if (polygons.length > 0) {
         _this.drawnShape = [];
@@ -773,7 +774,6 @@ function MapDrawShapeManager(map, _callback, drawingMode, drawFreeHandMode, poly
             };
           }));
         });
-        console.log(polygons.getPath());
 
         _classPrivateFieldLooseBase(_this, _setDeleteDrawPoint)[_setDeleteDrawPoint]();
 
