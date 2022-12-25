@@ -1,0 +1,146 @@
+name: ci
+on:
+  push:
+    branches:
+      - '*'
+
+jobs:
+  build:
+    name: Build, lint, and test on Node ${{ matrix.node }} and ${{ matrix.os }}
+    
+    if: ${{ !startsWith(github.event.head_commit.message, 'chore(release):') }}
+
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        node: ['10.x', '12.x', '14.x', '16.x']
+        os: [ubuntu-latest, windows-latest, macOS-latest]
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+
+      - name: Use Node ${{ matrix.node }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node }}
+
+      - name: Install deps and build (with cache)
+        uses: bahmutov/npm-install@v1
+
+      - name: Lint
+        run: yarn lint
+
+      - name: Test
+        run: yarn test --ci --coverage --maxWorkers=2
+
+      - name: Build
+        run: yarn build
+
+  bump:
+    name: Bump version
+    
+    if: |
+      github.ref == 'refs/heads/main' && 
+      (
+        startsWith(github.event.head_commit.message, 'feat') || 
+        startsWith(github.event.head_commit.message, 'fix') ||
+        startsWith(github.event.head_commit.message, 'docs') ||
+        startsWith(github.event.head_commit.message, 'perf') ||
+        startsWith(github.event.head_commit.message, 'build') ||
+        startsWith(github.event.head_commit.message, 'revert')
+      )
+    
+    needs: build
+
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Use Node 16.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: '16.x'
+
+      - name: Install deps and build (with cache)
+        uses: bahmutov/npm-install@v1
+
+      - name: Configure committer
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
+
+      - name: Standard-version
+        run: yarn release
+
+      - name: Push bumped version files and tag
+        run: git push --follow-tags origin main
+
+  npm:
+    name: Publish package to npm
+
+    needs: bump
+
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+        with:
+          ref: 'main'      
+
+      - name: Use Node 16.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: '16.x'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Install deps and build (with cache)
+        uses: bahmutov/npm-install@v1
+
+      - name: Build
+        run: yarn build
+
+      - name: Publish
+        run: yarn package
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+  release:
+    name: Create new release
+
+    needs: npm
+
+    runs-on: ubuntu-latest   
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+        with:
+          ref: 'main'
+
+      - name: Generate Release Changelog
+        run: npx extract-changelog-release > RELEASE_CHANGELOG.md
+
+      - uses: actions-ecosystem/action-get-latest-tag@v1
+        id: get-latest-tag
+        with:
+          semver_only: true
+
+      - name: Create release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ steps.get-latest-tag.outputs.tag }}
+          release_name: ${{ steps.get-latest-tag.outputs.tag }}
+          body_path: RELEASE_CHANGELOG.md
+          draft: false
+          prerelease: false
+          commitish: main
+          
+
+
+
