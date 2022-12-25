@@ -321,7 +321,7 @@ export default class MapDrawShapeManager {
     var bounds = new google.maps.LatLngBounds();
 
     // Get paths from polygon and set event listeners for each path separately
-    polygon.getPath().forEach(function (path, index) {
+    polygons.getPath().forEach(function (path, index) {
     
         bounds.extend(path);
     });

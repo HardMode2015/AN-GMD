@@ -759,7 +759,7 @@ function MapDrawShapeManager(map, _callback, drawingMode, drawFreeHandMode, poly
       var polygons = JstsHelper.processPolygon(_this.drawnPolylineDraft.getPath().getArray(), MapFunctions.getZoom(_this.map));
       var bounds = new google.maps.LatLngBounds(); // Get paths from polygon and set event listeners for each path separately
 
-      polygon.getPath().forEach(function (path, index) {
+      polygons.getPath().forEach(function (path, index) {
         bounds.extend(path);
       });
       console.log(bounds.getCenter());
