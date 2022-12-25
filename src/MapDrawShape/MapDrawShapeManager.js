@@ -252,11 +252,11 @@ export default class MapDrawShapeManager {
       polygons.forEach((p) => {
         this.drawnShape.push(new google.maps.Polygon({ path: p, ...this.polygonOptions }));
 
-        
+        console.log(p)
 
         shape = shape.concat(
           p.map((item) => {
-            console.log(item)
+            
             return { lat: item.lat(), lng: item.lng() };
           })
         );
