@@ -681,7 +681,6 @@ function MapDrawShapeManager(map, _callback, drawingMode, drawFreeHandMode, poly
             path: p
           }, _this.polygonOptions)));
 
-          console.log(_this.drawnShape);
           shape = shape.concat(p.map(function (item) {
             return {
               lat: item.lat(),
