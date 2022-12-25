@@ -676,7 +676,7 @@ function MapDrawShapeManager(map, _callback, drawingMode, drawFreeHandMode, poly
       if (polygons.length > 0) {
         _this.drawnShape = [];
         var shape = [];
-        polygons.forEach(function (p) {
+        polygons.map(function (p) {
           _this.drawnShape.push(new google.maps.Polygon(_extends({
             path: p
           }, _this.polygonOptions)));

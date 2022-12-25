@@ -249,7 +249,7 @@ export default class MapDrawShapeManager {
 
       let shape = [];
 
-      polygons.forEach((p) => {
+      polygons.map((p) => {
         this.drawnShape.push(new google.maps.Polygon({ path: p, ...this.polygonOptions }));
 
         console.log(p)
