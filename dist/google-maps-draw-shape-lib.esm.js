@@ -689,7 +689,7 @@ function MapDrawShapeManager(map, _callback, drawingMode, drawFreeHandMode, poly
 
         _classPrivateFieldLooseBase(_this, _setDeleteDrawPoint)[_setDeleteDrawPoint]();
 
-        _this.callback(shape);
+        _this.callback(polygons);
       } else {
         _classPrivateFieldLooseBase(_this, _initDraw)[_initDraw]();
       }
