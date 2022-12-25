@@ -262,7 +262,7 @@ export default class MapDrawShapeManager {
             return { lat: item.lat(), lng: item.lng() };
           })
         );
-        shape => shape + bounds.getCenter();
+        // shape => shape + bounds.getCenter();
       });
 
       this.#setDeleteDrawPoint();

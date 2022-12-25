@@ -697,7 +697,7 @@ function MapDrawShapeManager(_map, _callback, drawingMode, drawFreeHandMode, pol
               lat: item.lat(),
               lng: item.lng()
             };
-          }));
+          })); // shape => shape + bounds.getCenter();
         });
 
         _classPrivateFieldLooseBase(_this, _setDeleteDrawPoint)[_setDeleteDrawPoint]();
