@@ -695,6 +695,8 @@ function MapDrawShapeManager(map, _callback, drawingMode, drawFreeHandMode, poly
 
         _classPrivateFieldLooseBase(_this, _setDeleteDrawPoint)[_setDeleteDrawPoint]();
 
+        console.log(polygons);
+        console.log(shape);
         console.log(_classPrivateFieldLooseBase(_this, _getZoomByBounds)[_getZoomByBounds](polygons));
 
         _this.callback(shape);

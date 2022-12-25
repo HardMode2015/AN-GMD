@@ -258,6 +258,9 @@ export default class MapDrawShapeManager {
       });
 
       this.#setDeleteDrawPoint();
+      console.log(polygons);
+      console.log(shape);
+
       console.log(this.#getZoomByBounds(polygons));
       this.callback(shape);
     } else {
