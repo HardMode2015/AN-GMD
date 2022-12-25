@@ -317,7 +317,16 @@ export default class MapDrawShapeManager {
     this.drawnPolylineDraft.setMap(null);
 
     const polygons = JstsHelper.processPolygon(this.drawnPolylineDraft.getPath().getArray(), MapFunctions.getZoom(this.map));
-    console.log(polygons.getPath())
+    
+    var bounds = new google.maps.LatLngBounds();
+
+    // Get paths from polygon and set event listeners for each path separately
+    polygon.getPath().forEach(function (path, index) {
+    
+        bounds.extend(path);
+    });
+
+    console.log(bounds.getCenter())
     if (polygons.length > 0) {
       this.drawnShape = [];
 

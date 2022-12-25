@@ -757,7 +757,12 @@ function MapDrawShapeManager(map, _callback, drawingMode, drawFreeHandMode, poly
       _this.drawnPolylineDraft.setMap(null);
 
       var polygons = JstsHelper.processPolygon(_this.drawnPolylineDraft.getPath().getArray(), MapFunctions.getZoom(_this.map));
-      console.log(polygons.getPath());
+      var bounds = new google.maps.LatLngBounds(); // Get paths from polygon and set event listeners for each path separately
+
+      polygon.getPath().forEach(function (path, index) {
+        bounds.extend(path);
+      });
+      console.log(bounds.getCenter());
 
       if (polygons.length > 0) {
         _this.drawnShape = [];
