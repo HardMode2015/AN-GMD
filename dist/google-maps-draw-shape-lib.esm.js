@@ -444,6 +444,8 @@ var _draw = /*#__PURE__*/_classPrivateFieldLooseKey("draw");
 
 var _drawComplete = /*#__PURE__*/_classPrivateFieldLooseKey("drawComplete");
 
+var _getZoomByBounds = /*#__PURE__*/_classPrivateFieldLooseKey("getZoomByBounds");
+
 var _clearDrawListeners = /*#__PURE__*/_classPrivateFieldLooseKey("clearDrawListeners");
 
 var _initDrawFreeHand = /*#__PURE__*/_classPrivateFieldLooseKey("initDrawFreeHand");
@@ -464,7 +466,7 @@ var MapDrawShapeManager =
  * @param {string} initialPointInnerHtml String with the inner HTML of the draw initial point overlay
  * @param {string} deletePointInnerHtml String with the inner HTML of the draw delete point overlay
  */
-function MapDrawShapeManager(map, _callback, drawingMode, drawFreeHandMode, polygonOptions, initialPointInnerHtml, deletePointInnerHtml) {
+function MapDrawShapeManager(_map, _callback, drawingMode, drawFreeHandMode, polygonOptions, initialPointInnerHtml, deletePointInnerHtml) {
   var _this = this;
 
   this.initDrawnShape = function (initialShape) {
@@ -698,11 +700,30 @@ function MapDrawShapeManager(map, _callback, drawingMode, drawFreeHandMode, poly
 
         _this.callback({
           shape: shape,
-          center: bounds.getCenter()
+          center: _this.getZoomByBounds(_this.map, polygons)
         });
       } else {
         _classPrivateFieldLooseBase(_this, _initDraw)[_initDraw]();
       }
+    }
+  });
+  Object.defineProperty(this, _getZoomByBounds, {
+    writable: true,
+    value: function value(map, bounds) {
+      var MAX_ZOOM = map.mapTypes.get(map.getMapTypeId()).maxZoom || 21;
+      var MIN_ZOOM = map.mapTypes.get(map.getMapTypeId()).minZoom || 0;
+      var ne = map.getProjection().fromLatLngToPoint(bounds.getNorthEast());
+      var sw = map.getProjection().fromLatLngToPoint(bounds.getSouthWest());
+      var worldCoordWidth = Math.abs(ne.x - sw.x);
+      var worldCoordHeight = Math.abs(ne.y - sw.y); //Fit padding in pixels
+
+      var FIT_PAD = 40;
+
+      for (var zoom = MAX_ZOOM; zoom >= MIN_ZOOM; --zoom) {
+        if (worldCoordWidth * (1 << zoom) + 2 * FIT_PAD < $(map.getDiv()).width() && worldCoordHeight * (1 << zoom) + 2 * FIT_PAD < $(map.getDiv()).height()) return zoom;
+      }
+
+      return 0;
     }
   });
   Object.defineProperty(this, _clearDrawListeners, {
@@ -796,7 +817,7 @@ function MapDrawShapeManager(map, _callback, drawingMode, drawFreeHandMode, poly
       google.maps.event.clearListeners(_this.map, 'mouseup');
     }
   });
-  this.map = map;
+  this.map = _map;
   this.callback = _callback;
   this.drawFreeHandMode = drawFreeHandMode;
   this.polygonOptions = polygonOptions;

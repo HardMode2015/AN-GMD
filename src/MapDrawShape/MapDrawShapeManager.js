@@ -266,11 +266,32 @@ export default class MapDrawShapeManager {
 
       this.#setDeleteDrawPoint();
 
-      this.callback({shape: shape, center: bounds.getCenter()});
+      this.callback({shape: shape, center: this.getZoomByBounds(this.map, polygons)});
     } else {
       this.#initDraw();
     }
   };
+
+  #getZoomByBounds = ( map, bounds ) => {
+    var MAX_ZOOM = map.mapTypes.get( map.getMapTypeId() ).maxZoom || 21 ;
+    var MIN_ZOOM = map.mapTypes.get( map.getMapTypeId() ).minZoom || 0 ;
+
+    var ne= map.getProjection().fromLatLngToPoint( bounds.getNorthEast() );
+    var sw= map.getProjection().fromLatLngToPoint( bounds.getSouthWest() );
+
+    var worldCoordWidth = Math.abs(ne.x-sw.x);
+    var worldCoordHeight = Math.abs(ne.y-sw.y);
+
+    //Fit padding in pixels
+    var FIT_PAD = 40;
+
+    for( var zoom = MAX_ZOOM; zoom >= MIN_ZOOM; --zoom ){
+        if( worldCoordWidth*(1<<zoom)+2*FIT_PAD < $(map.getDiv()).width() &&
+            worldCoordHeight*(1<<zoom)+2*FIT_PAD < $(map.getDiv()).height() )
+            return zoom;
+    }
+    return 0;
+}
 
   #clearDrawListeners = () => {
     google.maps.event.clearListeners(this.map.getDiv(), 'click');
