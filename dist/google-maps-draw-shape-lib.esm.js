@@ -672,6 +672,7 @@ function MapDrawShapeManager(map, _callback, drawingMode, drawFreeHandMode, poly
       _this.drawnPolygonDraft.setMap(null);
 
       var polygons = JstsHelper.processPolygon(_this.drawnPolygonDraft.getPath().getArray());
+      console.log(polygons);
 
       if (polygons.length > 0) {
         _this.drawnShape = [];
@@ -690,10 +691,6 @@ function MapDrawShapeManager(map, _callback, drawingMode, drawFreeHandMode, poly
         });
 
         _classPrivateFieldLooseBase(_this, _setDeleteDrawPoint)[_setDeleteDrawPoint]();
-
-        console.log(polygons.getCenter());
-        console.log(shape);
-        console.log(_classPrivateFieldLooseBase(_this, _getZoomByBounds)[_getZoomByBounds](polygons));
 
         _this.callback(shape);
       } else {

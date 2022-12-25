@@ -242,6 +242,8 @@ export default class MapDrawShapeManager {
 
     const polygons = JstsHelper.processPolygon(this.drawnPolygonDraft.getPath().getArray());
 
+    console.log(polygons);
+
     if (polygons.length > 0) {
       this.drawnShape = [];
 
@@ -258,10 +260,8 @@ export default class MapDrawShapeManager {
       });
 
       this.#setDeleteDrawPoint();
-      console.log(polygons.getCenter());
-      console.log(shape);
 
-      console.log(this.#getZoomByBounds(polygons));
+      
       this.callback(shape);
     } else {
       this.#initDraw();
