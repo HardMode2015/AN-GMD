@@ -242,21 +242,16 @@ export default class MapDrawShapeManager {
 
     const polygons = JstsHelper.processPolygon(this.drawnPolygonDraft.getPath().getArray());
 
-    
-
     if (polygons.length > 0) {
       this.drawnShape = [];
 
       let shape = [];
 
-      polygons.map((p) => {
+      polygons.forEach((p) => {
         this.drawnShape.push(new google.maps.Polygon({ path: p, ...this.polygonOptions }));
-
-        console.log(p)
 
         shape = shape.concat(
           p.map((item) => {
-            
             return { lat: item.lat(), lng: item.lng() };
           })
         );
@@ -264,33 +259,11 @@ export default class MapDrawShapeManager {
 
       this.#setDeleteDrawPoint();
 
-      
       this.callback(shape);
     } else {
       this.#initDraw();
     }
   };
-
-  #getZoomByBounds = (bounds) => {
-    var MAX_ZOOM = this.map.mapTypes.get( this.map.getMapTypeId() ).maxZoom || 21 ;
-    var MIN_ZOOM = this.map.mapTypes.get( this.map.getMapTypeId() ).minZoom || 0 ;
-
-    var ne= this.map.getProjection().fromLatLngToPoint( bounds.getNorthEast() );
-    var sw= this.map.getProjection().fromLatLngToPoint( bounds.getSouthWest() );
-
-    var worldCoordWidth = Math.abs(ne.x-sw.x);
-    var worldCoordHeight = Math.abs(ne.y-sw.y);
-
-    //Fit padding in pixels
-    var FIT_PAD = 40;
-
-    for( var zoom = MAX_ZOOM; zoom >= MIN_ZOOM; --zoom ){
-        if( worldCoordWidth*(1<<zoom)+2*FIT_PAD < $(this.map.getDiv()).width() &&
-            worldCoordHeight*(1<<zoom)+2*FIT_PAD < $(this.map.getDiv()).height() )
-            return zoom;
-    }
-    return 0;
-}
 
   #clearDrawListeners = () => {
     google.maps.event.clearListeners(this.map.getDiv(), 'click');
@@ -359,6 +332,8 @@ export default class MapDrawShapeManager {
           })
         );
       });
+
+      console.log(polygons.getPath())
 
       this.#setDeleteDrawPoint();
 
