@@ -82,8 +82,7 @@ export default class JstsHelper {
       const coordinates = path.map((item) => {
         return new jsts.geom.Coordinate(item.lng(), item.lat());
       });
-
-      return coordinates;
+      
 
       if (coordinates.length > 0) {
         coordinates.push(coordinates[0]);
@@ -186,7 +185,7 @@ export default class JstsHelper {
       }
     }
 
-    return path;
+    return coordinates;
   };
 
   static #validateGeometry = (geom) => {
