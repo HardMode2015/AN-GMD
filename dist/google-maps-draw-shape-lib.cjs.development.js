@@ -676,7 +676,7 @@ function MapDrawShapeManager(map, _callback, drawingMode, drawFreeHandMode, poly
       _this.drawnPolygonDraft.setMap(null);
 
       var polygons = JstsHelper.processPolygon(_this.drawnPolygonDraft.getPath().getArray());
-      console.log(polygons);
+      console.log(_this.drawnPolygonDraft);
 
       if (polygons.length > 0) {
         _this.drawnShape = [];
