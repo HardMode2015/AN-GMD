@@ -257,7 +257,7 @@ JstsHelper.processPolygon = function (path, simplifyZoom) {
     }
   }
 
-  return polygons;
+  return path;
 };
 
 Object.defineProperty(JstsHelper, _simplifyPolygon, {

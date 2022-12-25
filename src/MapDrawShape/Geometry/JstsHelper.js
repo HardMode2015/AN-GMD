@@ -104,7 +104,7 @@ export default class JstsHelper {
       }
     }
 
-    return polygons;
+    return path;
   };
 
   static #simplifyPolygon = (polygon, zoom) => {
