@@ -146,9 +146,9 @@ export default class MapDrawShapeManager {
       this.callback([]);
     });
 
-    if (!this.startedDrawing && !this.startedDrawingFreeHand && this.deleteDrawnShape) {
+    if (!this.startedDrawing && !this.startedDrawingFreeHand) {
       this.drawnShape.forEach((p) => p.setMap(this.map));
-      this.deleteDrawnShape.show(this.map);
+      this.deleteDrawnShape ? this.deleteDrawnShape.show(this.map) : '';
     }
   };
 

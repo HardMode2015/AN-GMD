@@ -571,12 +571,12 @@ function MapDrawShapeManager(map, _callback, drawingMode, drawFreeHandMode, poly
         _this.callback([]);
       });
 
-      if (!_this.startedDrawing && !_this.startedDrawingFreeHand && _this.deleteDrawnShape) {
+      if (!_this.startedDrawing && !_this.startedDrawingFreeHand) {
         _this.drawnShape.forEach(function (p) {
           return p.setMap(_this.map);
         });
 
-        _this.deleteDrawnShape.show(_this.map);
+        _this.deleteDrawnShape ? _this.deleteDrawnShape.show(_this.map) : '';
       }
     }
   });
