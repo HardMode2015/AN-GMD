@@ -571,7 +571,7 @@ function MapDrawShapeManager(map, _callback, drawingMode, drawFreeHandMode, poly
         _this.callback([]);
       });
 
-      if (!_this.startedDrawing && !_this.startedDrawingFreeHand) {
+      if (!_this.startedDrawing && !_this.startedDrawingFreeHand && _this.deleteDrawnShape) {
         _this.drawnShape.forEach(function (p) {
           return p.setMap(_this.map);
         });

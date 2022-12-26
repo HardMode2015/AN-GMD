@@ -146,7 +146,7 @@ export default class MapDrawShapeManager {
       this.callback([]);
     });
 
-    if (!this.startedDrawing && !this.startedDrawingFreeHand) {
+    if (!this.startedDrawing && !this.startedDrawingFreeHand && this.deleteDrawnShape) {
       this.drawnShape.forEach((p) => p.setMap(this.map));
       this.deleteDrawnShape.show(this.map);
     }
