@@ -572,7 +572,7 @@ function MapDrawShapeManager(map, _callback, drawingMode, drawFreeHandMode, poly
           return p.setMap(_this.map);
         });
 
-        _this.deleteDrawnShape ? _this.deleteDrawnShape.show(_this.map) : '';
+        _this.deleteDrawnShape.show(_this.map);
       }
     }
   });
@@ -796,7 +796,7 @@ function MapDrawShapeManager(map, _callback, drawingMode, drawFreeHandMode, poly
   this.drawFreeHandMode = drawFreeHandMode;
   this.polygonOptions = polygonOptions;
   this.initialPointInnerHtml = initialPointInnerHtml;
-  this.deletePointInnerHtml = deletePointInnerHtml;
+  this.deletePointInnerHtml = deletePointInnerHtml ? deletePointInnerHtml : '';
   this.initialDrawPoint = null;
   this.startedDrawing = false;
   this.startedDrawingFreeHand = false;

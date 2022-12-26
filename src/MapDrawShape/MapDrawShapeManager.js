@@ -22,7 +22,7 @@ export default class MapDrawShapeManager {
     this.polygonOptions = polygonOptions;
 
     this.initialPointInnerHtml = initialPointInnerHtml;
-    this.deletePointInnerHtml = deletePointInnerHtml;
+    this.deletePointInnerHtml = deletePointInnerHtml ? deletePointInnerHtml : '';
 
     this.initialDrawPoint = null;
 
@@ -148,7 +148,7 @@ export default class MapDrawShapeManager {
 
     if (!this.startedDrawing && !this.startedDrawingFreeHand) {
       this.drawnShape.forEach((p) => p.setMap(this.map));
-      this.deleteDrawnShape ? this.deleteDrawnShape.show(this.map) : '';
+      this.deleteDrawnShape.show(this.map);
     }
   };
 
