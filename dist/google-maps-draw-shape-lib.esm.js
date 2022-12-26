@@ -464,7 +464,7 @@ var MapDrawShapeManager =
  * @param {string} initialPointInnerHtml String with the inner HTML of the draw initial point overlay
  * @param {string} deletePointInnerHtml String with the inner HTML of the draw delete point overlay
  */
-function MapDrawShapeManager(map, _callback, drawingMode, drawFreeHandMode, polygonOptions, initialPointInnerHtml, deletePointInnerHtml) {
+function MapDrawShapeManager(map, _callback, drawingMode, drawFreeHandMode, polygonOptions, initialPointInnerHtml, deletePointInnerHtml, onPlotCallback) {
   var _this = this;
 
   this.initDrawnShape = function (initialShape) {
@@ -639,6 +639,14 @@ function MapDrawShapeManager(map, _callback, drawingMode, drawFreeHandMode, poly
         polylinePath.push(latLng);
 
         _this.drawnPolygonDraft.setPath(polylinePath);
+
+        var lat = latLng.lat();
+        var lng = latLng.lng();
+
+        _this.onPlotCallback({
+          lng: lng,
+          lat: lat
+        });
       });
       google.maps.event.addDomListener(_this.map.getDiv(), 'mousemove', function (e) {
         var polylinePath = _this.drawnPolylineDraft.getPath();
@@ -752,12 +760,7 @@ function MapDrawShapeManager(map, _callback, drawingMode, drawFreeHandMode, poly
 
       _this.drawnPolylineDraft.setMap(null);
 
-      var polygons = JstsHelper.processPolygon(_this.drawnPolylineDraft.getPath().getArray(), MapFunctions.getZoom(_this.map)); // var bounds = new google.maps.LatLngBounds();
-      // // Get paths from polygon and set event listeners for each path separately
-      // polygons.getPath().forEach(function (path, index) {
-      //     bounds.extend(path);
-      // });
-      // console.log(bounds.getCenter())
+      var polygons = JstsHelper.processPolygon(_this.drawnPolylineDraft.getPath().getArray(), MapFunctions.getZoom(_this.map));
 
       if (polygons.length > 0) {
         _this.drawnShape = [];
@@ -778,6 +781,8 @@ function MapDrawShapeManager(map, _callback, drawingMode, drawFreeHandMode, poly
         _classPrivateFieldLooseBase(_this, _setDeleteDrawPoint)[_setDeleteDrawPoint]();
 
         _this.callback(shape);
+
+        _this.onPlotCallback(shape);
       } else {
         _classPrivateFieldLooseBase(_this, _initDrawFreeHand)[_initDrawFreeHand]();
       }
@@ -804,6 +809,7 @@ function MapDrawShapeManager(map, _callback, drawingMode, drawFreeHandMode, poly
   this.drawnPolygonDraft = null;
   this.drawnShape = null;
   this.deleteDrawnShape = null;
+  this.onPlotCallback = onPlotCallback;
   this.setDrawingMode(drawingMode);
 }
 /**
