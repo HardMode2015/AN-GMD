@@ -38,6 +38,7 @@ export default class MapDrawShapeManager {
     this.setDrawingMode(drawingMode);
   }
 
+  
   /**
    * It draws a shape on the map using the provided shape
    * @param {object[]} initialShape Array of objects that contain lat lng values
